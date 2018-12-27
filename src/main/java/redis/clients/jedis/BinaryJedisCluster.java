@@ -2035,4 +2035,14 @@ public class BinaryJedisCluster implements BinaryJedisClusterCommands,
       }
     }.runBinary(key);
   }
+
+  @Override
+  public Long waitReplicas(final byte[] key, final int replicas, final long timeout) {
+    return new JedisClusterCommand<Long>(connectionHandler, maxAttempts) {
+      @Override
+      public Long execute(Jedis connection) {
+        return connection.waitReplicas(replicas, timeout);
+      }
+    }.runBinary(key);
+  }
 }
